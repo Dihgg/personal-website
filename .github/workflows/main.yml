@@ -1,0 +1,46 @@
+name: Deploy
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: 'develop'
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+      - name: clean npm install
+        working-directory: ./front
+        run: npm ci
+      - name: Build using node
+        working-directory: ./front
+        run: npm run build --if-present -- --base-href=/dev/website/
+      - name: Archive artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist-files
+          path: ./front/dist/
+  deploy:
+    runs-on: ubuntu-latest
+    environment: 'develop'
+    needs:
+      - build
+    steps:
+      - name: Download the artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: dist-files
+      - name: Use FTP deploy
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./
+          server-dir: /public_html/dev/website/

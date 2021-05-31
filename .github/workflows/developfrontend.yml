@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy Frontend
 on:
   push:
     branches: [ develop ]
@@ -24,7 +24,7 @@ jobs:
       - name: Archive artifact
         uses: actions/upload-artifact@v2
         with:
-          name: dist-files
+          name: dist-files-front
           path: ./front/dist/
   deploy:
     runs-on: ubuntu-latest
@@ -35,7 +35,7 @@ jobs:
       - name: Download the artifact
         uses: actions/download-artifact@v2
         with:
-          name: dist-files
+          name: dist-files-front
       - name: Use FTP deploy
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:

@@ -4,6 +4,3 @@
 [submodule "front"]
 	path = front
 	url = https://github.com/Dihgg/personal-website-angular.git
-[submodule "wait-for-it"]
-	path = wait-for-it
-	url = https://github.com/vishnubob/wait-for-it.git

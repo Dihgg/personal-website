@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 services:
   dihgg-front:
     build: front/
@@ -44,11 +44,11 @@ services:
     volumes:
       - ./database:/var/lib/database
     environment:
-      - POSTGRES_USER=${DATABASE_USERNAME}
-      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
-      - POSTGRES_DB=${DATABASE_NAME}
-      - POSTGRES_HOST_AUTH_METHOD=md5
-      - PGDATA=/var/lib/database
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+      PGDATA: /var/lib/database
     networks:
       - webnet
 volumes:

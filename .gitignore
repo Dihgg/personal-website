@@ -1,2 +1,4 @@
 ﻿/.idea/
 /database/
+*.code-workspace
+*.iml
